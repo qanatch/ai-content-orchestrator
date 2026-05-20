@@ -43,7 +43,7 @@ Don't make the system smarter. Make it more observable and controllable.
 
 ## Architecture
 
-![Pipeline](canvasa_.png)
+![Pipeline](canvasa.png)
 
 ## Status
 
