@@ -1,54 +1,179 @@
 # AI Content Orchestrator
 
-An automated system that generates, validates, and publishes Instagram content — where the final decision always stays with a human.
+A governed AI workflow designed for sensitive content generation.
 
-The topic is intentional: psychology and neuroscience. A domain where AI cannot simply generate — it has to classify, filter, verify sources, and follow strict safety rules. This makes it a good test environment for the real question:
+The system separates:
+- research
+- generation
+- policy
+- validation
+- human approval
 
-**Can an AI agent work autonomously, complete tasks correctly — and still remain under control?**
+to reduce:
+- semantic drift
+- unsafe outputs
+- uncontrolled automation
+- prompt instability
 
-## What it does
+Instead of optimizing for full autonomy,  
+the architecture prioritizes:
+- governance
+- observability
+- deterministic validation
+- human oversight
 
-The system takes a topic, researches scientific sources, verifies their credibility and quality, writes a post, checks it for safety and quality, and presents it for human approval. Nothing gets published without explicit sign-off.
+---
 
-Topic → Classify → Research → Verify sources → Generate → Validate → Human Gate → Publish
+## Core Principle
 
-## Key principles
+> AI proposes. Human decides.
 
 A prompt asks. Code enforces.
 
-Every hard rule lives in deterministic code — not in prompts. The system cannot override them. Human approval is not optional — it is hardcoded.
+Every hard rule lives in deterministic code — not in prompts.  
+The system cannot override them.
 
-Don't make the system smarter. Make it more observable and controllable.
+Human approval is mandatory and hardcoded into the workflow.
 
-## What's built — Day 40
+---
 
-- Safety classifier — GREEN / YELLOW / RED zones with CONFIDENCE levels
-- Policy Layer — all rules in deterministic code, not prompts
-- Validator — safety, format and quality checks, up to 3 retry attempts
-- Human Gate — web interface for structured human approval
-- PostgreSQL — posts, validation logs, decisions, failure patterns
-- Memory Layer — system learns from past failures by topic and error type
-- Observability dashboard — 6 real-time metrics
-- Threshold Alerts — daily automated health check
-- Versioning — prompt versions and change log
+## Why This Exists
+
+Large language models are good at generating text,  
+but unreliable at:
+- guarantees
+- constraints
+- consistency
+- long-term behavioral stability
+
+Most AI workflows optimize for generation speed.
+
+This project explores a different question:
+
+> Can AI systems complete complex tasks reliably while remaining observable, constrained, and under human control?
+
+The domain is intentional: psychology and neuroscience.
+
+It is a useful stress-test environment because the system cannot simply generate content. It must:
+- classify sensitive topics
+- verify research quality
+- avoid clinical escalation
+- follow strict safety policies
+- preserve semantic relevance
+- remain reviewable by humans
+
+---
+
+## Architecture
+
+### High-Level Pipeline
+
+Topic Selection  
+→ Safety Classification  
+→ Research & Source Verification  
+→ Policy Enforcement  
+→ Content Generation  
+→ Deterministic Validation  
+→ Human Gate  
+→ Publish
+
+---
+
+## Governance Model
+
+The architecture separates:
+- generation
+- policy
+- validation
+- execution
+
+instead of relying on prompts alone.
+
+### Key principles
+
+- Safety-critical logic is deterministic
+- Human oversight is mandatory
+- Validators operate independently from generators
+- Retry systems are constrained
+- Observability is prioritized over autonomy
+- Governance exists outside prompts
+
+---
+
+## Current Capabilities
+
+- Deterministic policy enforcement outside prompts
+- Multi-stage validation with retry governance
+- Human-in-the-loop approval workflow
+- Topic risk classification (GREEN / YELLOW / RED)
+- Structured audit logging
+- Failure-aware memory layer
+- Real-time observability metrics
+- Threshold-based health monitoring
+- Prompt and workflow versioning
+- Source verification and filtering
+- Semantic drift monitoring
+
+---
+
+## Real Operational Problems Observed
+
+The project documents real-world AI workflow failure modes, including:
+- semantic drift from prompt examples
+- retry degradation
+- memory pressure effects
+- validator false positives / false negatives
+- topic contamination through few-shot examples
+- instability caused by prompt complexity
+
+The goal is not to hide these behaviors,  
+but to make them observable and governable.
+
+---
 
 ## Stack
 
 - Orchestration: n8n (self-hosted)
-- AI: Claude API — Haiku (classification) + Sonnet (generation)
+- AI: Claude Haiku + Sonnet
 - Search: Perplexity API
-- Database: PostgreSQL 16
-- Server: Hetzner VPS, Nuremberg EU (~23 EUR/month)
-- Queue: Google Sheets
+- Database: PostgreSQL
+- Infrastructure: Hetzner VPS (EU)
+
+---
+
+## Current Status
+
+Active development — Day 40.
+
+The system is running in production-like testing with:
+- published Instagram posts
+- structured human review
+- retry governance
+- observability instrumentation
+- audit logging
+- memory-aware generation
+
+Current focus:
+- semantic validation
+- governance reliability
+- observability
+- long-term maintainability
+
+---
+
+## Design Philosophy
+
+> Don’t make the system smarter.  
+> Make it more observable and controllable.
+
+This project is intentionally designed as a controlled AI system — not an autonomous AI system.
+
+---
+
+Natalia Chernenkaya  
+Prague · 2026
 
 ## Architecture
 
 ![Pipeline](canvasa.png)
 
-## Status
-
-Active development. Day 40. First posts published. All P0 safety tests passed.
-
-Building toward full Autonomy Governance Layer (AGL) and EU AI Act compliance.
-
-*Natalia Chernenkaya · Prague · 2026*
